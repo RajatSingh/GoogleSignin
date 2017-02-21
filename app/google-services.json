@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "111516028293",
+    "project_id": "fit-sanctum-159410"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111516028293:android:5b2161a793694133",
+        "android_client_info": {
+          "package_name": "com.appinventiv.googlesignin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111516028293-2opr94pgfjb2nrkpq31hr5f26kusjfp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appinventiv.googlesignin",
+            "certificate_hash": "eac7c9106df77208de9e2bcd28011327f44f1727"
+          }
+        },
+        {
+          "client_id": "111516028293-vl0dkscqrogeimsvbet7v1j8d1olkh20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAsNENqM3ilcVZgPHDLN88ZFPNNO1EA3c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

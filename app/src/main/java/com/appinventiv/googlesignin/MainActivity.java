@@ -4,15 +4,21 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.appinvent.googlelibs.GoogleSignCallback;
 import com.appinvent.googlelibs.GoogleSignInAI;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.services.people.v1.model.EmailAddress;
+import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
+import com.google.api.services.people.v1.model.PhoneNumber;
 
 import java.util.List;
+
+import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
 public class MainActivity extends AppCompatActivity implements GoogleSignCallback {
     private GoogleSignInAI mGoogleSignInAI;
@@ -67,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements GoogleSignCallbac
     }
 
     @Override
-    public void googleContactList(List<Person> personList) {
-        Toast.makeText(this,personList.size(),Toast.LENGTH_LONG).show();
+    public void googleContactList(String personList) {
+        Toast.makeText(this,personList+"",Toast.LENGTH_LONG).show();
+
     }
 }

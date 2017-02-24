@@ -82,7 +82,6 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
                         new Scope(PeopleScopes.USERINFO_EMAIL),
                         new Scope(PeopleScopes.USER_PHONENUMBERS_READ))
                 .requestServerAuthCode(mWebclientId)
-                //.requestIdToken("111516028293-vl0dkscqrogeimsvbet7v1j8d1olkh20.apps.googleusercontent.com")
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(mActivity)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,mGoogleSignInOptions)
@@ -161,7 +160,7 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
     }
 
     private void getUserContactsList(GoogleSignInAccount googleSignInAccount) {
-        new PeoplesAsync(mActivity,mWebclientId,mWebclientSceret,mGoogleSignCallback).execute(googleSignInAccount.getServerAuthCode());
+        new GetAuthAccessTokenAsync(mActivity,mGoogleSignCallback).execute(googleSignInAccount.getServerAuthCode());
     }
 
     private void getProfileInfo(GoogleSignInAccount googleSignInAccount) {

@@ -21,12 +21,12 @@ import static com.google.android.gms.plus.PlusOneDummyView.TAG;
  * Created by Rajat on 23-02-2017.
  */
 
-public class PeoplesAsync extends AsyncTask<String, Void, List<Person>> {
+public class PeopleContactsAsync extends AsyncTask<String, Void, List<Person>> {
     private Context mContext;
     private String mWebclientId, mWebclientSceret;
     private List<Person> connections;
     private GoogleSignCallback mGoogleSignCallback;
-    public PeoplesAsync(Context context,String webclientId,String webclientSceret,GoogleSignCallback googleSignCallback) {
+    public PeopleContactsAsync(Context context,String webclientId,String webclientSceret,GoogleSignCallback googleSignCallback) {
         this.mContext = context;
         this.mWebclientId = webclientId;
         this.mWebclientSceret = webclientSceret;
@@ -43,8 +43,7 @@ public class PeoplesAsync extends AsyncTask<String, Void, List<Person>> {
     protected List<Person> doInBackground(String... params) {
           try {
             People peopleService = PeopleHelper.setUp(mContext, params[0],mWebclientId,mWebclientSceret);
-            ListConnectionsResponse response = peopleService.people().connections()
-                    .list("people/me")
+            ListConnectionsResponse response = peopleService.people().connections().list("people/me")
                     // This line's really important! Here's why:
                     // http://stackoverflow.com/questions/35604406/retrieving-information-about-a-contact-with-google-people-api-java
                     .setRequestMaskIncludeField("person.names,person.emailAddresses,person.phoneNumbers")
@@ -83,7 +82,7 @@ public class PeoplesAsync extends AsyncTask<String, Void, List<Person>> {
     @Override
     protected void onPostExecute(List<Person> nameList) {
         super.onPostExecute(nameList);
-        mGoogleSignCallback.googleContactList(nameList);
+        //mGoogleSignCallback.googleContactList(nameList);
 
     }
 }

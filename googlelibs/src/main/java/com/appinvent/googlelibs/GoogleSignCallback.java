@@ -15,5 +15,5 @@ public interface GoogleSignCallback {
      void googleSignInFailureResult(String s);
      void googleSignOutSussessResult(String s);
      void googleSignOutFailureResult(String s);
-     void googleContactList(String contactListResponse);
+     void googleContactList(List<GmailContactBean> contactListResponse);
 }

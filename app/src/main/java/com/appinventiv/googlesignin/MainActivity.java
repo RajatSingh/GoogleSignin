@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.appinvent.googlelibs.GmailContactBean;
 import com.appinvent.googlelibs.GoogleSignCallback;
 import com.appinvent.googlelibs.GoogleSignInAI;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -73,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements GoogleSignCallbac
     }
 
     @Override
-    public void googleContactList(String personList) {
-        Toast.makeText(this,personList+"",Toast.LENGTH_LONG).show();
+    public void googleContactList(List<GmailContactBean> personList) {
+        Toast.makeText(this,personList.size()+"",Toast.LENGTH_LONG).show();
 
     }
 }

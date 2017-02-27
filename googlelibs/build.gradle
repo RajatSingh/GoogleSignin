@@ -9,7 +9,6 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -19,18 +18,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
+
     })
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.google.android.gms:play-services-auth:9.8.0'
     compile 'com.google.android.gms:play-services-plus:9.8.0'
-    compile 'com.google.api-client:google-api-client:1.22.0'
-    compile 'com.google.api-client:google-api-client-android:1.22.0'
-    compile 'com.google.apis:google-api-services-people:v1-rev4-1.22.0'
+    compile 'com.google.api-client:google-api-client:1.21.0'
+    //  People API
+    compile ('com.google.apis:google-api-services-people:v1-rev2-1.21.0'){
+        exclude module: 'httpclient' //by artifact name
+        exclude group: 'org.apache.httpcomponents' //by group
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient' //by both name and group
+    }
+    //compile 'com.google.api-client:google-api-client:1.20.0'
+    compile 'com.google.gdata:core:1.47.1'
     testCompile 'junit:junit:4.12'
+    compile 'org.apache.httpcomponents:httpclient:4.0.1'
+    compile 'org.apache.httpcomponents:httpcore:4.0.1'
 }

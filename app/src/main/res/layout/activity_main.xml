@@ -36,5 +36,15 @@
         android:id="@+id/button4"
         android:onClick="doLogout"/>
 
+    <Button
+        android:text="Share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:id="@+id/button3"
+        android:onClick="shareOnGoogle"/>
+
 
 </RelativeLayout>

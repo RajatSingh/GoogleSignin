@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.appinvent.googlelibs.asynctasks.GetAuthAccessTokenAsync;
+import com.appinvent.googlelibs.interfaces.GoogleSignCallback;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -18,6 +20,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
+import com.google.api.services.people.v1.PeopleScopes;
 
 /**
  * Created by Rajat on 21-02-2017.
@@ -31,34 +34,79 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
     private boolean mSignInClicked;
     private int GOOGLE_SIGN_IN_REQUEST_CODE;
     private GoogleSignCallback mGoogleSignCallback;
+    private String mWebclientId, mWebclientSceret;
+    private static int mLoginPurpose;
 
-
-    public static GoogleSignInAI getInstance(Activity activity, int requestCode,GoogleSignCallback  googleSignCallback) {
-        if (mGoogleSignInAI == null) {
-            mGoogleSignInAI = new GoogleSignInAI(activity,requestCode,googleSignCallback);
-        }
-        return mGoogleSignInAI;
+    /**
+     * Enum for getting the login purpose
+     */
+    public enum LOGIN_PURPOSE {
+        LOGIN_SOCIAL,
+        LOGIN_FETCH_CONTACT,
+        FETCH_FRIENDS,
+        SHARE_ON_CIRCLE
     }
 
-    public GoogleSignInAI(Activity activity, int requestCode,GoogleSignCallback  googleSignCallback) {
+
+   /*
+   * @param - activity
+   * @param - requestCode used to handle response in onActivity result
+   * @param - googleSignCallback interface to return callback
+   * @param - webclientId
+   * @param - webclientSceret
+   * @param - loginPurpose define purpose of login like fetch user info or fetch contact list
+   *
+   */
+    public static GoogleSignInAI getInstance(Activity activity, int requestCode,GoogleSignCallback  googleSignCallback,String webclientId,String webclientSceret,int loginPurpose) {
+        mLoginPurpose = loginPurpose;
+        if (mGoogleSignInAI == null) {
+            mGoogleSignInAI = new GoogleSignInAI(activity,requestCode,googleSignCallback,webclientId,webclientSceret);
+        }
+       return mGoogleSignInAI;
+    }
+
+    public GoogleSignInAI(Activity activity, int requestCode,GoogleSignCallback  googleSignCallback,String webclientId,String webclientSceret) {
         this.mActivity = activity;
         this.GOOGLE_SIGN_IN_REQUEST_CODE = requestCode;
-        mGoogleSignCallback = googleSignCallback;
-        setUpGoogleClient();
+        this.mGoogleSignCallback = googleSignCallback;
+        this.mWebclientId = webclientId;
+        this.mWebclientSceret = webclientSceret;
+        if(mLoginPurpose==LOGIN_PURPOSE.LOGIN_SOCIAL.ordinal()){
+            setUpGoogleClientForGoogleLogin();
+        }else if(mLoginPurpose==LOGIN_PURPOSE.LOGIN_FETCH_CONTACT.ordinal()){
+            setUpGoogleClientForContacts();
+        }
+
     }
 
     /*
-    * Configure google sign in request
+    * Configure google sign in request for contacts
     */
-    private void setUpGoogleClient(){
+    private void setUpGoogleClientForContacts(){
         mGoogleSignInOptions  = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestScopes(new Scope(Scopes.PLUS_ME))
-                .requestScopes(new Scope(Scopes.PLUS_LOGIN))
-                .requestScopes(new Scope(Scopes.PROFILE))
-                .requestId()
+                .requestScopes(new Scope(Scopes.PLUS_LOGIN),
+                        new Scope(PeopleScopes.CONTACTS_READONLY),
+                        new Scope(PeopleScopes.USER_EMAILS_READ),
+                        new Scope(PeopleScopes.USERINFO_EMAIL),
+                        new Scope(PeopleScopes.USER_PHONENUMBERS_READ))
+                .requestServerAuthCode(mWebclientId)
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(mActivity)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,mGoogleSignInOptions)
+                .addOnConnectionFailedListener(this)
+                .addConnectionCallbacks(this)
+                .build();
+
+    }
+
+    /*
+    * Configure google sign in request for contacts
+    */
+    private void setUpGoogleClientForGoogleLogin(){
+        mGoogleSignInOptions  = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
                 .requestProfile()
-                .requestIdToken("111516028293-vl0dkscqrogeimsvbet7v1j8d1olkh20.apps.googleusercontent.com")
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(mActivity)
                 .addApi(Auth.GOOGLE_SIGN_IN_API,mGoogleSignInOptions)
@@ -105,7 +153,12 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
     private void handleSignInResult(GoogleSignInResult googleSignInResult){
         if(googleSignInResult.isSuccess()){
          GoogleSignInAccount googleSignInAccount = googleSignInResult.getSignInAccount();
-         getProfileInfo(googleSignInAccount);
+         if(mLoginPurpose==LOGIN_PURPOSE.LOGIN_SOCIAL.ordinal()){
+             getProfileInfo(googleSignInAccount);
+         }else if(mLoginPurpose==LOGIN_PURPOSE.LOGIN_FETCH_CONTACT.ordinal()){
+             getUserGmailContactsList(googleSignInAccount);
+         }
+
 
         }else{
        //Failure Message
@@ -113,6 +166,10 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
         }
         mSignInClicked = false;
 
+    }
+
+    private void getUserGmailContactsList(GoogleSignInAccount googleSignInAccount) {
+        new GetAuthAccessTokenAsync(mActivity,mGoogleSignCallback,mWebclientId,mWebclientSceret).execute(googleSignInAccount.getServerAuthCode());
     }
 
     private void getProfileInfo(GoogleSignInAccount googleSignInAccount) {

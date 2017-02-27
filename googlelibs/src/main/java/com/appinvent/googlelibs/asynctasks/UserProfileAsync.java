@@ -49,7 +49,7 @@ public class UserProfileAsync extends AsyncTask<String, Void, Person> {
     @Override
     protected void onPostExecute(Person person) {
         super.onPostExecute(person);
-        //mGoogleSignCallback.googleContactList(nameList);
+        mGoogleSignCallback.googleProfileInfo(person);
 
     }
 }

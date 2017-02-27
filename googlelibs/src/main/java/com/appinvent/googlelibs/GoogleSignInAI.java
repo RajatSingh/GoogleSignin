@@ -162,7 +162,7 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
     }
 
     private void getUserContactsList(GoogleSignInAccount googleSignInAccount) {
-        new GetAuthAccessTokenAsync(mActivity,mGoogleSignCallback).execute(googleSignInAccount.getServerAuthCode());
+        new GetAuthAccessTokenAsync(mActivity,mGoogleSignCallback,mWebclientId,mWebclientSceret).execute(googleSignInAccount.getServerAuthCode());
     }
 
     private void getProfileInfo(GoogleSignInAccount googleSignInAccount) {

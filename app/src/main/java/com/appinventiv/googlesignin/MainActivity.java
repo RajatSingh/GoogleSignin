@@ -5,10 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import com.appinvent.googlelibs.GoogleShareUtils;
 import com.appinvent.googlelibs.GoogleSignInAI;
 import com.appinvent.googlelibs.interfaces.GoogleSignCallback;
 import com.appinvent.googlelibs.model.GmailContactBean;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.api.services.people.v1.model.Person;
 
 import java.util.List;
 
@@ -66,8 +69,17 @@ public class MainActivity extends AppCompatActivity implements GoogleSignCallbac
     }
 
     @Override
+    public void googleProfileInfo(Person person) {
+
+    }
+
+    @Override
     public void googleContactList(List<GmailContactBean> personList) {
         Toast.makeText(this,personList.size()+"",Toast.LENGTH_LONG).show();
 
+    }
+
+    public void shareOnGoogle(View view){
+        GoogleShareUtils.onShareDialog(this,"Hello","https://appinventiv.com/");
     }
 }

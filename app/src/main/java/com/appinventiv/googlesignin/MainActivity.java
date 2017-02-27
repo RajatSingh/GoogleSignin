@@ -1,25 +1,17 @@
 package com.appinventiv.googlesignin;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.appinvent.googlelibs.GmailContactBean;
-import com.appinvent.googlelibs.GoogleSignCallback;
 import com.appinvent.googlelibs.GoogleSignInAI;
+import com.appinvent.googlelibs.interfaces.GoogleSignCallback;
+import com.appinvent.googlelibs.model.GmailContactBean;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.api.services.people.v1.model.EmailAddress;
-import com.google.api.services.people.v1.model.Name;
-import com.google.api.services.people.v1.model.Person;
-import com.google.api.services.people.v1.model.PhoneNumber;
 
 import java.util.List;
 
-import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
 public class MainActivity extends AppCompatActivity implements GoogleSignCallback {
     private GoogleSignInAI mGoogleSignInAI;

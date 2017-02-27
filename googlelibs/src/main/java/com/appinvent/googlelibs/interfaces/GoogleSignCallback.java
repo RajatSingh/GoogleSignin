@@ -1,8 +1,8 @@
-package com.appinvent.googlelibs;
+package com.appinvent.googlelibs.interfaces;
 
 
+import com.appinvent.googlelibs.model.GmailContactBean;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.api.services.people.v1.model.Person;
 
 import java.util.List;
 

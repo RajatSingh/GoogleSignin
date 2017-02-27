@@ -1,31 +1,15 @@
-package com.appinvent.googlelibs;
+package com.appinvent.googlelibs.asynctasks;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.gdata.client.authn.oauth.GoogleOAuthHelper;
-import com.google.gdata.client.authn.oauth.GoogleOAuthParameters;
-import com.google.gdata.client.authn.oauth.OAuthException;
-import com.google.gdata.client.authn.oauth.OAuthHmacSha1Signer;
-import com.google.gdata.client.authn.oauth.OAuthSigner;
-import com.google.gdata.client.contacts.ContactsService;
-import com.google.gdata.data.contacts.ContactEntry;
-import com.google.gdata.data.contacts.ContactFeed;
-import com.google.gdata.data.extensions.Email;
-import com.google.gdata.data.extensions.Name;
-import com.google.gdata.util.ServiceException;
+import com.appinvent.googlelibs.NetworkUtils;
+import com.appinvent.googlelibs.interfaces.GoogleSignCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Rajat on 24-02-2017.

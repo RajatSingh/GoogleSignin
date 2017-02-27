@@ -1,21 +1,17 @@
-package com.appinvent.googlelibs;
+package com.appinvent.googlelibs.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
+import com.appinvent.googlelibs.PeopleHelper;
+import com.appinvent.googlelibs.interfaces.GoogleSignCallback;
 import com.google.api.services.people.v1.People;
-import com.google.api.services.people.v1.model.EmailAddress;
 import com.google.api.services.people.v1.model.ListConnectionsResponse;
-import com.google.api.services.people.v1.model.Name;
 import com.google.api.services.people.v1.model.Person;
-import com.google.api.services.people.v1.model.PhoneNumber;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
 /**
  * Created by Rajat on 23-02-2017.

@@ -1,15 +1,14 @@
-package com.appinvent.googlelibs;
+package com.appinvent.googlelibs.asynctasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.appinvent.googlelibs.PeopleHelper;
+import com.appinvent.googlelibs.interfaces.GoogleSignCallback;
 import com.google.api.services.people.v1.People;
-import com.google.api.services.people.v1.model.ListConnectionsResponse;
 import com.google.api.services.people.v1.model.Person;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Rajat on 24-02-2017.

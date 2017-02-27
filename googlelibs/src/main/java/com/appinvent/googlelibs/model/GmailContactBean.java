@@ -1,4 +1,4 @@
-package com.appinvent.googlelibs;
+package com.appinvent.googlelibs.model;
 
 /**
  * Created by Rajat on 27-02-2017.

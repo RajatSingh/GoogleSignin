@@ -43,13 +43,20 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
     public enum LOGIN_PURPOSE {
         LOGIN_SOCIAL,
         LOGIN_FETCH_CONTACT,
-        SHARE_DIALOG,
         FETCH_FRIENDS,
         SHARE_ON_CIRCLE
     }
 
 
-    //http://stackoverflow.com/questions/38743940/deprecated-plus-peopleapi-loadhttp://stackoverflow.com/questions/38743940/deprecated-plus-peopleapi-load
+   /*
+   * @param - activity
+   * @param - requestCode used to handle response in onActivity result
+   * @param - googleSignCallback interface to return callback
+   * @param - webclientId
+   * @param - webclientSceret
+   * @param - loginPurpose define purpose of login like fetch user info or fetch contact list
+   *
+   */
     public static GoogleSignInAI getInstance(Activity activity, int requestCode,GoogleSignCallback  googleSignCallback,String webclientId,String webclientSceret,int loginPurpose) {
         mLoginPurpose = loginPurpose;
         if (mGoogleSignInAI == null) {
@@ -149,7 +156,7 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
          if(mLoginPurpose==LOGIN_PURPOSE.LOGIN_SOCIAL.ordinal()){
              getProfileInfo(googleSignInAccount);
          }else if(mLoginPurpose==LOGIN_PURPOSE.LOGIN_FETCH_CONTACT.ordinal()){
-             getUserContactsList(googleSignInAccount);
+             getUserGmailContactsList(googleSignInAccount);
          }
 
 
@@ -161,7 +168,7 @@ public class GoogleSignInAI implements GoogleApiClient.OnConnectionFailedListene
 
     }
 
-    private void getUserContactsList(GoogleSignInAccount googleSignInAccount) {
+    private void getUserGmailContactsList(GoogleSignInAccount googleSignInAccount) {
         new GetAuthAccessTokenAsync(mActivity,mGoogleSignCallback,mWebclientId,mWebclientSceret).execute(googleSignInAccount.getServerAuthCode());
     }
 
